@@ -1,0 +1,26 @@
+#+title: creative-coding
+
+* Table of Contents :toc:
+- [[#running-local-server][Running Local Server]]
+
+* Running Local Server
+Node is much faster than python simple server while requiring a little bit of setup - so Node is encouraged. Just 3 simple steps:
++ Download and Install node.js
++ Open a terminal or command prompt (on Windows you might need to open the command prompt as admin)
++ In the terminal type:
+#+begin_src shell
+npm install -g http-server
+#+end_src
+
+Done!
+
+From then on just cd to the folder that has the files you want to serve and type
+#+begin_src shell
+http-server
+#+end_src
+Then point your browser at http://localhost:8080/
+
+Note 1: If you are having problems where the browser does not reload your javascript files after changes are made, you may need to instantiate the server with a specific cache value. To do this, include the cache timeout flag, with a value of '-1'. This tells the browser not to cache files (like sketch.js).
+#+begin_src shell
+http-server -c-1
+#+end_src
