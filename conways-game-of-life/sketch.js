@@ -8,10 +8,13 @@ let worldRows = worldWidth / cellSize;
 function setup() {
   // establish large enough canvas for world ( + wiggle room )
   createCanvas(worldHeight + 5, worldWidth + 5);
-
-  // set framerate
   frameRate(10);
 
+  createEmptyArrays();
+  startGame();
+}
+
+function createEmptyArrays() {
   // set up empty 2D arrays world and nextWorld
   world = new Array(worldCols);
   for (let cols = 0; cols < worldCols; cols++) {
@@ -21,13 +24,26 @@ function setup() {
   for (let cols = 0; cols < worldCols; cols++) {
     nextWorld[cols] = new Array(worldRows);
   }
+}
 
-  start();
+function startGame() {
+  // set-up initial world with 2D array of cells
+  for (let cols = 0; cols < worldCols; cols++) {
+    for (let rows = 0; rows < worldRows; rows++) {
+      if ( cols === 0 || cols === worldCols-1 || rows === 0 || rows === worldRows-1 ) world[cols][rows] = 0;
+      else world[cols][rows] = floor(random(2));
+    }
+  }
+}
+
+// utlity to restart game of life on mouse press
+function mousePressed() {
+  startGame();
 }
 
 function draw() {
   // calculate next generation
-  nextGeneration(world);
+  nextGeneration();
 
   // display alive cells in current world state
   for (let cols = 0; cols < worldCols; cols++) {
@@ -36,22 +52,6 @@ function draw() {
       else fill('#f1faee');
       noStroke();
       rect(cols * cellSize, rows * cellSize, cellSize, cellSize)
-    }
-  }
-
-}
-
-// on mouse press restart the world state
-function mousePressed() {
-  start();
-}
-
-function start() {
-  // set-up initial world with 2D array of cells
-  for (let cols = 0; cols < worldCols; cols++) {
-    for (let rows = 0; rows < worldRows; rows++) {
-      if ( cols === 0 || cols === worldCols-1 || rows === 0 || rows === worldRows-1 ) world[cols][rows] = 0;
-      else world[cols][rows] = floor(random(2));
     }
   }
 }
@@ -86,4 +86,3 @@ function nextGeneration() {
   nextWorld = temp;
 
 }
-
